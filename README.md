@@ -3,15 +3,9 @@
 This project predicts diabetes risk using real-world health data and machine learning models, including a PyTorch neural network.
 
 ## Features
-- Data Cleaning and Feature Engineering
-- PyTorch Neural Network Model
-- Gradio Web App Deployment
-
-## Structure
-.
-├── notebooks/
-│   └── Diabetes_Risk_Prediction.ipynb
-├── app/
-│   └── gradio_app.py
-├── scaler.pkl
-├── README.md
+Perform EDA and handle missing/invalid values
+Build a strong preprocessing pipeline with feature engineering
+Compare multiple models (LogReg, RF, XGBoost, Neural Net)
+Visualize model performance (ROC, AUC, feature importance)
+Explain predictions with SHAP
+Deploy a live web app with Gradio
