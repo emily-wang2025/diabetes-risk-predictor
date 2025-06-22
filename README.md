@@ -31,28 +31,27 @@ All features were scaled using StandardScaler, and categorical/continuous distin
 
 ## Modeling Choices, Evaluation, and Iteration
 I trained and compared four models: Logistic Regression, Random Forest, XGBoost, and a PyTorch neural network. I used precision, recall, and ROC AUC as evaluation metrics, and trained models using 80/20 splits to monitor overfitting. For XGBoost, I implemented RandomizedSearchCV for hyperparameter tuning to control complexity. This included tuning max_depth, subsample, and learning_rate, which improved precision and recall but still underperformed Random Forest in AUC. I also added a neural net built from scratch in PyTorch using nn.Sequential, trained with BCELoss and Adam.
-- Logistic Regression
---	Pros: Fast, interpretable, no risk of overfitting
---	Cons: Assumes linearity; underperformed on recall
--- Result: AUC = 0.8233 — solid baseline, but not good enough for deployment
-- Random Forest
-•	Pros: High AUC (0.8319), robust to noise and outliers, great generalization
-•	Cons: Less precise than XGBoost; not ideal for extrapolation
-•	Why I chose it: It offered the best overall balance of performance, consistency, and explainability (via feature_importances_). I confirmed generalization using AUC and recall on both train and test sets.
+1. Logistic Regression
+-	Pros: Fast, interpretable, no risk of overfitting
+- Cons: Assumes linearity; underperformed on recall
+- Result: AUC = 0.8233 — solid baseline, but not good enough for deployment
+2. Random Forest
+-	Pros: High AUC (0.8319), robust to noise and outliers, great generalization
+-	Cons: Less precise than XGBoost; not ideal for extrapolation
+-	Why I chose it: It offered the best overall balance of performance, consistency, and explainability (via feature_importances_). I confirmed generalization using AUC and recall on both train and test sets.
 3. XGBoost (tuned)
-•	Pros: Great precision and recall after tuning, handles skew and imbalance well
-•	Cons: Slightly lower AUC (0.8156) than Random Forest; added complexity didn’t result in clear gain
-•	Notes: Used RandomizedSearchCV to tune max_depth, subsample, learning_rate, and n_estimators. Useful to learn tuning workflows even though RF performed better.
+-	Pros: Great precision and recall after tuning, handles skew and imbalance well
+-	Cons: Slightly lower AUC (0.8156) than Random Forest; added complexity didn’t result in clear gain
+-	Notes: Used RandomizedSearchCV to tune max_depth, subsample, learning_rate, and n_estimators. Useful to learn tuning workflows even though RF performed better.
 4. PyTorch Neural Network
-•	Pros: Highest AUC (0.8452), captured nonlinearities
-•	Cons: Prone to overfitting on small datasets, lower interpretability, no dropout or validation tracking
-•	Result: Impressive performance, but not deployable due to instability and lower trust
+-	Pros: Highest AUC (0.8452), captured nonlinearities
+-	Cons: Prone to overfitting on small datasets, lower interpretability, no dropout or validation tracking
+-	Result: Impressive performance, but not deployable due to instability and lower trust
 
 
 Despite the neural net achieving the highest ROC AUC (~0.8452), I ultimately deployed the Random Forest (AUC = 0.8319) because it had the best balance of generalization, interpretability, and consistency. It was also easier to explain through built-in feature importances. I confirmed no overfitting by plotting AUC on both training and test sets and through precision-recall curves.
 
 ## Deployment & Engineering
 To make the model interactive and usable by non-technical users, I wrapped the Random Forest model using joblib and built a real-time web app using Gradio, hosted on Hugging Face Spaces. The app allows users to enter their health stats and receive a probability score. The model code and deployment script are modular and production-ready (gradio_app.py), showing my ability to translate ML models into real interfaces — a core skill for this LinkedIn role.
-![image](https://github.com/user-attachments/assets/99c9c65b-0aaa-4b8b-80b9-9b6a1e1174ef)
 
 
