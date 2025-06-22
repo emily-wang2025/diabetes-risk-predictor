@@ -5,13 +5,13 @@ This project predicts diabetes risk using real-world health data and machine lea
 ## Features
 - Perform EDA and handle missing/invalid values
 - Build a strong preprocessing pipeline with feature engineering
-- Compare multiple models (LogReg, RF, XGBoost, Neural Net)
+- Compare multiple models (LogReg, RF, XGBoost, tuned XGBoost, Neural Net)
 - Visualize model performance (ROC, AUC, feature importance)
 - Explain predictions with SHAP
 - Deploy a live web app with Gradio
 
 ## Explaination
-One of the projects I’m most proud of is a machine learning system I designed and deployed to predict diabetes risk using health screening data. This project involved the full ML engineering pipeline—from raw data to interactive web deployment. The complete code is here: https://github.com/emily-wang2025/diabetes-risk-predictor and the live web app is running at https://huggingface.co/spaces/emily-wang2025/diabetes-risk-predictor.
+One of the projects I’m most proud of is a machine learning system I designed and deployed to predict diabetes risk using health screening data. This project involved the full ML engineering pipeline—from raw data to interactive web deployment. The complete code is here: https://github.com/emily-wang2025/diabetes-risk-predictor and the live web app is running at https://huggingface.co/spaces/emiwang/gradio .
 
 I started with the Pima Indians Diabetes dataset and conducted thorough EDA. I noticed patterns such as abnormally high variance in insulin levels and invalid zeros in several columns (like BMI or blood pressure), which I cleaned by imputing median values. To capture non-obvious interactions, I engineered features like BMI × Age (to approximate metabolic stress over time), Glucose per Pregnancy (normalizing glucose by hormonal burden), and log transforms of skewed values like insulin. These features improved downstream model performance, especially for tree-based models.
 
