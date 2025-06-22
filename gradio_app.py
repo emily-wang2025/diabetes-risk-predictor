@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import joblib
 
-model = joblib.load("xgboost_diabetes_model.pkl")
+model = joblib.load("randomforest_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
 def predict_diabetes(Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin,
@@ -41,7 +41,7 @@ iface = gr.Interface(
     ],
     outputs="text",
     title="Diabetes Risk Predictor",
-    description="Estimate diabetes risk using a trained XGBoost model"
+    description="Estimate diabetes risk using a trained Random Forest model"
 )
 
 if __name__ == "__main__":
