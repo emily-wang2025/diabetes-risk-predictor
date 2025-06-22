@@ -11,31 +11,40 @@ This project predicts diabetes risk using real-world health data and machine lea
 - Deploy a live web app with Gradio
 
 ## Explaination
-One of the projects I’m most proud of is a machine learning system I designed and deployed to predict diabetes risk using health screening data. This project involved the full ML engineering pipeline—from raw data to interactive web deployment. The complete code is here: https://github.com/emily-wang2025/diabetes-risk-predictor and the live web app is running at https://huggingface.co/spaces/emiwang/gradio .
+One of the machine learning projects I enjoyed creating is a diabetes risk prediction system that I designed, developed, and deployed end-to-end using real-world health screening data. This project involved the full ML engineering pipeline—from data ingestion and preprocessing to modeling, evaluation, and live deployment.
+Full code: https://github.com/emily-wang2025/diabetes-risk-predictor
+Live app: https://huggingface.co/spaces/emiwang/gradio
 
+As a solo project, I owned every part of the pipeline: data cleaning, exploratory data analysis (EDA), feature engineering, model training and selection, hyperparameter tuning, and deployment through a Gradio interface hosted on Hugging Face Spaces. The project demonstrates my ability to execute across the full machine learning lifecycle and translate models into interactive, production-ready tools.
 
-This was a solo project where I was responsible for everything — data cleaning, EDA, feature engineering, model training and comparison, hyperparameter tuning, evaluation, and final deployment through a Gradio interface hosted on Hugging Face Spaces. The project reflects my ability to work across the full ML lifecycle — from raw data to a live web app.
+I started with the Pima Indians Diabetes dataset and conducted thorough EDA. I identified issues such as invalid zero values in several columns (e.g., insulin, BMI, blood pressure), which I addressed by imputing medians. I also discovered strong skew and variance in features like insulin and glucose. To address these, I engineered several new features to capture more nuanced clinical signals:
 
-I started with the Pima Indians Diabetes dataset and conducted thorough EDA. I noticed patterns such as abnormally high variance in insulin levels and invalid zeros in several columns (like BMI or blood pressure), which I cleaned by imputing median values. To capture non-obvious interactions, I engineered features like BMI × Age (to approximate metabolic stress over time), Glucose per Pregnancy (normalizing glucose by hormonal burden), and log transforms of skewed values like insulin. These features improved downstream model performance, especially for tree-based models.
+- BMI_Age: The product of BMI and age, designed to approximate cumulative metabolic stress and highlight risk in older individuals with obesity.
 
-After data cleaning (handling missing values and normalizing skewed distributions), I focused on feature engineering, which proved essential in boosting model performance and generalization. For example:
--	I created BMI_Age, a product of BMI and age, to reflect how obesity in older individuals may indicate a higher or different risk profile compared to younger individuals.
--	I added GlucosePerPreg (Glucose / (Pregnancies + 1)), which normalizes glucose relative to pregnancy count — capturing a physiological nuance in the dataset.
--	I applied log transformations (e.g., LogInsulin, LogBMI) to reduce skew and stabilize variance for models sensitive to outliers.
+- GlucosePerPreg: Glucose level divided by (pregnancies + 1), a domain-informed feature to reflect glucose regulation relative to hormonal changes.
 
-These features significantly improved performance — especially in models like Random Forest and XGBoost, where feature importance confirmed their predictive value.
+- LogInsulin, LogBMI: Log transformations to reduce skew, stabilize variance, and improve model robustness, particularly for linear models.
 
-I trained and evaluated several models, including Logistic Regression, Random Forest, XGBoost (default and tuned), and a PyTorch-based neural network. I used RandomizedSearchCV to tune XGBoost’s hyperparameters efficiently across a large parameter space.
+These engineered features significantly improved model performance, especially for tree-based models like Random Forest and XGBoost. Feature importance rankings confirmed their contribution.
 
 ## Model Comparison and Trade-offs
 
-I trained and compared four models:
--	Logistic Regression: Strong interpretability and solid baseline ROC AUC (0.8233), but weaker precision and recall.
--	Random Forest: Best overall balance — highest ROC AUC (0.8319), strong recall, robust to overfitting, and interpretable via feature importance.
--	XGBoost (tuned with RandomizedSearchCV): Performed well in terms of precision and recall, and benefited from regularization, but its ROC AUC (0.8156) was slightly lower than Random Forest. While more powerful on large structured datasets, here it added complexity without a performance gain.
--	PyTorch Neural Network: Achieved the highest ROC AUC (~0.8452), but I ultimately excluded it due to small dataset size, limited interpretability, and lack of validation techniques like dropout or early stopping.
-  
-I selected Random Forest as the final model for deployment, based on its consistent performance and transparency. 
+I trained and evaluated multiple models: Logistic Regression, Random Forest, XGBoost (both default and tuned via RandomizedSearchCV), and a PyTorch-based neural network. Each model came with trade-offs:
 
-To make the model accessible and demonstrate real-time inference, I built a Gradio app (https://huggingface.co/spaces/emily-wang2025/diabetes-risk-predictor). Users can enter health metrics and receive an instant diabetes risk score. The app wraps the Random Forest model using joblib for efficient inference, and the backend is designed to reflect real-world production use cases. The app code is located in app/gradio_app.py of the GitHub repo.
+- Logistic Regression offered high interpretability and a strong baseline AUC (0.8233), but underperformed on recall and precision.
+
+- Random Forest achieved the best overall performance with the highest ROC AUC (0.8319), strong recall, and robustness to overfitting. It also provided interpretability through built-in feature importance, which made it ideal for deployment.
+
+- Tuned XGBoost performed well on recall and precision and benefited from regularization, but its ROC AUC (0.8156) was slightly lower, and the added complexity did not result in measurable gains for this dataset.
+
+- Neural Network (PyTorch) achieved the highest AUC (~0.8452) but was excluded from deployment due to limited interpretability, small dataset size, and lack of regularization features like dropout or early stopping.
+
+Given the trade-offs, I selected Random Forest as the final model due to its balance of accuracy, robustness, and interpretability.
+
+To make the system accessible, I built and deployed a Gradio web application:
+https://huggingface.co/spaces/emiwang/gradio
+
+
+The app allows users to input health metrics and receive a real-time risk prediction. It uses the trained Random Forest model saved via joblib for fast inference and is structured to mirror real-world production interfaces. The app code is available in the app/gradio_app.py file of the GitHub repository.
+
 
