@@ -30,5 +30,8 @@ I trained and compared four models:
 -	Random Forest: Best overall balance — highest ROC AUC (0.8319), strong recall, robust to overfitting, and interpretable via feature importance.
 -	XGBoost (tuned with RandomizedSearchCV): Performed well in terms of precision and recall, and benefited from regularization, but its ROC AUC (0.8156) was slightly lower than Random Forest. While more powerful on large structured datasets, here it added complexity without a performance gain.
 -	PyTorch Neural Network: Achieved the highest ROC AUC (~0.8452), but I ultimately excluded it due to small dataset size, limited interpretability, and lack of validation techniques like dropout or early stopping.
-I selected Random Forest as the final model for deployment, based on its consistent performance and transparency. To make the model accessible and demonstrate real-time inference, I built a Gradio app (https://huggingface.co/spaces/emily-wang2025/diabetes-risk-predictor). Users can enter health metrics and receive an instant diabetes risk score. The app wraps the Random Forest model using joblib for efficient inference, and the backend is designed to reflect real-world production use cases. The app code is located in app/gradio_app.py of the GitHub repo.
+  
+I selected Random Forest as the final model for deployment, based on its consistent performance and transparency. 
+
+To make the model accessible and demonstrate real-time inference, I built a Gradio app (https://huggingface.co/spaces/emily-wang2025/diabetes-risk-predictor). Users can enter health metrics and receive an instant diabetes risk score. The app wraps the Random Forest model using joblib for efficient inference, and the backend is designed to reflect real-world production use cases. The app code is located in app/gradio_app.py of the GitHub repo.
 
