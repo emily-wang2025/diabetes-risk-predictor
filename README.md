@@ -22,9 +22,13 @@ After data cleaning (handling missing values and normalizing skewed distribution
 -	I created BMI_Age, a product of BMI and age, to reflect how obesity in older individuals may indicate a higher or different risk profile compared to younger individuals.
 -	I added GlucosePerPreg (Glucose / (Pregnancies + 1)), which normalizes glucose relative to pregnancy count — capturing a physiological nuance in the dataset.
 -	I applied log transformations (e.g., LogInsulin, LogBMI) to reduce skew and stabilize variance for models sensitive to outliers.
+
 These features significantly improved performance — especially in models like Random Forest and XGBoost, where feature importance confirmed their predictive value.
+
 I trained and evaluated several models, including Logistic Regression, Random Forest, XGBoost (default and tuned), and a PyTorch-based neural network. I used RandomizedSearchCV to tune XGBoost’s hyperparameters efficiently across a large parameter space.
-Model Comparison and Trade-offs
+
+## Model Comparison and Trade-offs
+
 I trained and compared four models:
 -	Logistic Regression: Strong interpretability and solid baseline ROC AUC (0.8233), but weaker precision and recall.
 -	Random Forest: Best overall balance — highest ROC AUC (0.8319), strong recall, robust to overfitting, and interpretable via feature importance.
